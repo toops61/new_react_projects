@@ -1,0 +1,59 @@
+button {
+    border-radius: .4em;
+    padding: .2em .5em;
+}
+
+.open-close {
+    position: absolute;
+    right: 1em;
+    top: .1em;
+}
+
+.modif-sup-btn {
+    position: absolute;
+    top: -0.5em;
+    right: 0;
+    display: flex;
+    div {
+        cursor: pointer;
+    }
+    .hover-infos {
+        font-size: .8em;
+        display: none;
+        position: absolute;
+        top: -3em;
+        left: -1vw;
+        background-color: #979797;
+        padding: .4em;
+        color: white;
+        border-radius: .5em;
+        border: solid;
+    }
+}
+
+.modif-btn {
+    &::before {
+        @include icon('\f044',1.2em);
+    }
+    margin: 0 .2em;
+    &:hover {
+        .hover-infos {
+            display: block;
+        }
+    }
+}
+
+.delete-btn {
+    &::before {
+        border-radius: 50%;
+        border: solid black .15em;
+        @include icon('\f057');
+        color: #c40202;
+        background-color: #fff;
+    }
+    &:hover {
+        .hover-infos {
+            display: block;
+        }
+    }
+}

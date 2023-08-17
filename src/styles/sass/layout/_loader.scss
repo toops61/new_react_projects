@@ -1,0 +1,57 @@
+.loader-page {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  @include flexCenter;
+  @media (orientation: portrait) {
+    flex-direction: column;
+  }
+}
+
+.redux-image {
+  width: 10em;
+  height: 10em;
+  @include flexCenter;
+  img {
+    @include imageFit;
+  }
+  animation: rotate-left 3s infinite linear/* , bouncing 0.8s infinite alternate */;
+}
+.ts-image {
+  width: 15em;
+  height: 15em;
+  @include flexCenter;
+  img {
+    @include imageFit;
+  }
+  margin: 3em;
+  animation: appears 1s infinite alternate linear;
+}
+.react-image {
+  width: 10em;
+  height: 10em;
+  @include flexCenter;
+  img {
+    @include imageFit;
+  }
+  animation: rotate-anim 4s infinite linear;
+}
+
+.point-container {
+    display: flex;
+    .point {
+      @include point-style;
+      background-color: #fff;
+      animation: bouncing .8s infinite alternate;
+    }
+    .point:nth-child(2) {
+      animation-delay: 100ms;
+    }
+    .point:nth-child(3) {
+      animation-delay: 200ms;
+    }
+  }

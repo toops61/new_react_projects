@@ -1,0 +1,49 @@
+.container {
+    padding: 1em;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: #18cdf6;
+    width: 20vw;
+    @include flexColumn;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 1em;
+    border: solid .15em;
+    box-shadow: 4px 4px 8px;
+    p {
+        white-space: nowrap;
+    }
+}
+
+.first-form {
+    input {
+        margin: 0 1vw;
+    }
+}
+
+.useref-page {
+    background-color: #079354;
+    color: white;
+    width: 100%;
+    min-height: 3em;
+    border: solid black;
+    margin: 1em 0;
+    padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    .objectref {
+        width: 20vw;
+        height: 5em;
+        border: solid black;
+        background-color: #fff;
+        color: black;
+        @include flexCenter;
+        margin: .5em 1vw;
+    }
+}

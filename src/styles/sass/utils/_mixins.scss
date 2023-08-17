@@ -1,0 +1,132 @@
+@mixin imageFit {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+@mixin position ($top: 0px, $right: 0px) {
+    top: $top;
+    right: $right;
+}
+
+@mixin positionTopLeft ($top: 0, $left: 0) {
+    top: $top;
+    left: $left;
+}
+
+@mixin textShadow {
+    text-shadow: 2px 2px 4px black;
+}
+
+@mixin btn-shadow ($offsetX: 2px, $offsetY: 2px, $blur: 14px, $color: black)  {
+    box-shadow: $offsetX $offsetY $blur $color;
+}
+
+@mixin flexColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@mixin flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin portrait-version {
+    @media (orientation: portrait) {
+        @content;
+    }
+}
+
+@mixin mobile-version {
+    @media screen and (max-width:$breakpoint-mobile) {
+        @content;
+    }
+}
+
+@mixin tablette-version {
+    @media screen and (max-width:$breakpoint-ipad) {
+        @content;
+    }
+}
+
+@mixin iconBrands ($content: "\f09a", $font-size: 1.4em) {
+    content: $content;
+    font-family: 'Font Awesome 6 brands';
+    font-weight: 400;
+    font-size: $font-size;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    margin: 1rem;
+}
+
+@mixin iconEmpty ($content: "\f005", $font-size: 1.4em) {
+    content: $content;
+    font-family: 'Font Awesome 6 empty';
+    font-weight: 400;
+    font-size: $font-size;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+
+@mixin icon ($content: '\f3e5', $font-size: 1em) {
+    content: $content;
+    font-family: 'Font Awesome 6';
+    font-weight: 900;
+    font-size: $font-size;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+
+@mixin text-shadow ($color:black) {
+    text-shadow: 2px 2px 1px $color;
+}
+
+@mixin adapt-size ($font-size: 4vw) {
+    @media screen and (max-width: 600px) {
+        * {
+            font-size: $font-size;
+        }
+    }
+}
+
+@mixin loader-style {
+    display: flex;
+    z-index: 99;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #f1f1f1;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin point-style {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background-color: rgb(112, 112, 112);
+    margin: 0 .5em;
+}
+
+@mixin popup {
+    padding: .6em;
+    background-color: rgb(97, 97, 97);
+    * {
+        color: #f1f1f1;
+    }
+}
+
+@mixin button-shadow {
+    box-shadow: 2px 2px 6px;
+}
