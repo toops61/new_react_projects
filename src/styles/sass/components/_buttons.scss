@@ -9,51 +9,32 @@ button {
     top: .1em;
 }
 
-.modif-sup-btn {
+.back-home {
     position: absolute;
-    top: -0.5em;
-    right: 0;
-    display: flex;
-    div {
-        cursor: pointer;
+    top: 1em;
+    left: 1em;
+    cursor: pointer;
+    a::before {
+        @include icon('\f3e5',2em);
+        color: black;
     }
-    .hover-infos {
-        font-size: .8em;
-        display: none;
-        position: absolute;
-        top: -3em;
-        left: -1vw;
-        background-color: #979797;
-        padding: .4em;
+}
+
+.slider-page .arrow {
+    cursor: pointer;
+    z-index: 5;
+    background-color: transparent;
+    border: solid .15em;
+    @include flexCenter;
+    padding: .5em .7em;
+    border-radius: 50%;
+    &::before {
         color: white;
-        border-radius: .5em;
-        border: solid;
+        @include icon('\f054',2em);
+        filter: drop-shadow(0px 0px 2px black);
     }
-}
-
-.modif-btn {
-    &::before {
-        @include icon('\f044',1.2em);
+    &.left::before {
+        @include icon('\f053',2em);
     }
-    margin: 0 .2em;
-    &:hover {
-        .hover-infos {
-            display: block;
-        }
-    }
-}
-
-.delete-btn {
-    &::before {
-        border-radius: 50%;
-        border: solid black .15em;
-        @include icon('\f057');
-        color: #c40202;
-        background-color: #fff;
-    }
-    &:hover {
-        .hover-infos {
-            display: block;
-        }
-    }
+    margin: 0 1.5vw;
 }

@@ -1,7 +1,7 @@
-@mixin imageFit {
+@mixin imageFit ($type:contain){
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: $type;
 }
 
 @mixin position ($top: 0px, $right: 0px) {
