@@ -8,6 +8,7 @@ export default function Slider() {
   const [picturesObjectsArray, setPicturesObjectsArray] = useState<string[]>([]);
   const [slideShow, setSlideShow] = useState(false);
   const [playRotation, setPlayRotation] = useState(false);
+  const [intervalRotation, setIntervalRotation] = useState(0);
 
   const picturesRef = useRef<HTMLDivElement>(null);
 
@@ -28,16 +29,18 @@ export default function Slider() {
   
   //remove an element and add one
   const fillImages = (way:string,newIndex:number) => {
-    const tempArray = [...picturesObjectsArray];
-    const lastIndex = photosArray.length-1;
-    if (way === 'right') {
-      tempArray.shift();
-      tempArray.push(photosArray[newIndex < lastIndex ? (newIndex+1) : 0]);
-    } else {
-      tempArray.pop();
-      tempArray.splice(0,0,photosArray[newIndex > 0 ? (newIndex-1) : lastIndex]);
-    }
-    setPicturesObjectsArray(tempArray);
+    setPicturesObjectsArray(state => {
+      const tempArray = [...state];
+      const lastIndex = photosArray.length-1;
+      if (way === 'right') {
+        tempArray.shift();
+        tempArray.push(photosArray[newIndex < lastIndex ? (newIndex+1) : 0]);
+      } else {
+        tempArray.pop();
+        tempArray.splice(0,0,photosArray[newIndex > 0 ? (newIndex-1) : lastIndex]);
+      }
+      return tempArray;
+    });
   }
 
     useEffect(() => {
@@ -71,31 +74,27 @@ export default function Slider() {
 
   //play rotation interval
   useEffect(() => {
-    let rotateInterval = 0;
     if (playRotation === true) {
-      !rotateInterval && (rotateInterval = setInterval(() => {
+      let rotateInterval = 0;
+      !intervalRotation && (rotateInterval = setInterval(() => {
         setCenterIndex(centerIndex => {
           const newIndex = centerIndex < (photosArray.length-1) ? (centerIndex+1) : 0;
           picturesRef?.current?.classList.add(`right-anim`);
           setTimeout(() => {
-            setPicturesObjectsArray(picturesObjectsArray => {
-              const tempArray = [...picturesObjectsArray];
-              tempArray.shift();
-              tempArray.push(photosArray[newIndex < photosArray.length-1 ? (newIndex+1) : 0]);
-              return tempArray;
-            });
+            fillImages('right',newIndex);
           }, 1200);          
           return newIndex;
         });
       }, 3000));
+      setIntervalRotation(rotateInterval);
     } else {
-      clearInterval(rotateInterval);
-      rotateInterval = 0;
+      clearInterval(intervalRotation);
+      setIntervalRotation(0);
     }
-  
+    
     return () => {
-      rotateInterval = 0;
-      clearInterval(rotateInterval);
+      clearInterval(intervalRotation);
+      setIntervalRotation(0);
     }
   }, [playRotation])
   
