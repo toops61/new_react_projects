@@ -23,7 +23,7 @@ button {
 .slider-page .arrow {
     cursor: pointer;
     z-index: 5;
-    background-color: transparent;
+    background-color: black;
     border: solid .15em;
     @include flexCenter;
     padding: .5em .7em;
@@ -37,4 +37,9 @@ button {
         @include icon('\f053',2em);
     }
     margin: 0 1.5vw;
+    //transition: opacity .4s;
+    &:hover {
+        //opacity: .7;
+        background-color: #474747;
+    }
 }

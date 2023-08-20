@@ -7,10 +7,12 @@ export default function Slider() {
   const [centerIndex, setCenterIndex] = useState(0);
   const [picturesObjectsArray, setPicturesObjectsArray] = useState<string[]>([]);
   const [slideShow, setSlideShow] = useState(false);
+  const [playRotation, setPlayRotation] = useState(false);
 
   const picturesRef = useRef<HTMLDivElement>(null);
 
   const movePictures = (way:string) => {
+    setPlayRotation(false);
     if (picturesRef?.current?.className === 'pictures-container') {
       picturesRef.current.classList.add(`${way}-anim`);
       const lastIndex = photosArray.length-1;
@@ -54,6 +56,7 @@ export default function Slider() {
         } 
         setPicturesObjectsArray(tempArray);
         setSlideShow(tempArray.length > 1 ? true : false);
+        tempArray.length > 1  && setPlayRotation(true);
       }
     }, [photosArray])
   
@@ -65,9 +68,41 @@ export default function Slider() {
       setSlideShow(appartsPhotos.length > 1 ? true : false);
     } 
   }, []);
+
+  //play rotation interval
+  useEffect(() => {
+    let rotateInterval = 0;
+    if (playRotation === true) {
+      !rotateInterval && (rotateInterval = setInterval(() => {
+        setCenterIndex(centerIndex => {
+          const newIndex = centerIndex < (photosArray.length-1) ? (centerIndex+1) : 0;
+          picturesRef?.current?.classList.add(`right-anim`);
+          setTimeout(() => {
+            setPicturesObjectsArray(picturesObjectsArray => {
+              const tempArray = [...picturesObjectsArray];
+              tempArray.shift();
+              tempArray.push(photosArray[newIndex < photosArray.length-1 ? (newIndex+1) : 0]);
+              return tempArray;
+            });
+          }, 1200);          
+          return newIndex;
+        });
+      }, 3000));
+    } else {
+      clearInterval(rotateInterval);
+      rotateInterval = 0;
+    }
+  
+    return () => {
+      rotateInterval = 0;
+      clearInterval(rotateInterval);
+    }
+  }, [playRotation])
+  
   
   return (
     <main className="slider-page">
+      {photosArray.length > 1 ? <button className={"play-pause" + (playRotation ? " pause" : "")} onClick={() => setPlayRotation(!playRotation)}></button> : <></>}
       <div className="back-home">
         <Link to='/'></Link>
       </div>

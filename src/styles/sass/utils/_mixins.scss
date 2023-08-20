@@ -4,16 +4,6 @@
     object-fit: $type;
 }
 
-@mixin position ($top: 0px, $right: 0px) {
-    top: $top;
-    right: $right;
-}
-
-@mixin positionTopLeft ($top: 0, $left: 0) {
-    top: $top;
-    left: $left;
-}
-
 @mixin textShadow {
     text-shadow: 2px 2px 4px black;
 }
