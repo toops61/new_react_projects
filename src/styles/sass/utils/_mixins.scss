@@ -4,12 +4,16 @@
     object-fit: $type;
 }
 
-@mixin textShadow {
-    text-shadow: 2px 2px 4px black;
+@mixin btnShadow ($offsetX: 2px, $offsetY: 2px, $blur: 6px, $color: black)  {
+    box-shadow: $offsetX $offsetY $blur $color;
 }
 
-@mixin btn-shadow ($offsetX: 2px, $offsetY: 2px, $blur: 14px, $color: black)  {
-    box-shadow: $offsetX $offsetY $blur $color;
+@mixin textShadow ($color:black) {
+    text-shadow: 2px 2px 1px $color;
+}
+
+@mixin boxShadow ($color:black) {
+    box-shadow: 2px 2px 8px $color;
 }
 
 @mixin flexColumn {
@@ -76,10 +80,6 @@
     line-height: 1;
 }
 
-@mixin text-shadow ($color:black) {
-    text-shadow: 2px 2px 1px $color;
-}
-
 @mixin adapt-size ($font-size: 4vw) {
     @media screen and (max-width: 600px) {
         * {
@@ -110,13 +110,11 @@
 }
 
 @mixin popup {
+    position: absolute;
+    top:-2em;
     padding: .6em;
     background-color: rgb(97, 97, 97);
     * {
         color: #f1f1f1;
     }
-}
-
-@mixin button-shadow {
-    box-shadow: 2px 2px 6px;
 }

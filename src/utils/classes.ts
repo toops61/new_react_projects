@@ -1,39 +1,22 @@
-//Persos
-export class NewCard {
+export class NewMeteoInfos {
     constructor (
-      public pseudo:string,
-      public persoName:string,
-      public id:string
+        public temp:string,
+        public icon:string,
+        public imageURL:string,
+        public timezone:string,
+        public dt:string,
+        public arrayHours:{hour:string,temperature:string,icon:string}[],
+        public arrayDays:{day:string,temperature:string,icon:string}[]
     ) {}
 }
 
-export class NewPerso {
+export class NewExtraMeteoInfos {
     constructor (
-      public pseudo:string,
-      public persoName:string
-    ) {}
-}
-
-//Fruity
-export class NewFruit {
-    constructor (
-        public name:string,
-        public url: string,
-        public price: number,
-        public id: string
-    ) {}
-}
-
-//Boxy
-export class NewShadow {
-    constructor (
-        public active: boolean,
-        public inset: boolean,
-        public horizontal_offset: number,
-        public vertical_offset: number,
-        public blur_radius: number,
-        public spread_radius: number,
-        public color: string,
-        public id: string
+        public sun_up:string,
+        public sun_down:string,
+        public temp_feel:number,
+        public humidity:number,
+        public wind_speed:number,
+        public description: string
     ) {}
 }
