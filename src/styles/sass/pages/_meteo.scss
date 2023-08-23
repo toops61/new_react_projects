@@ -131,6 +131,7 @@
         background-color: #158de3;
         border-radius: 2em;
         border: solid;
+        overflow: hidden;
         .infos {
             color: white;
             @include flexColumn;
@@ -272,23 +273,31 @@
             width: 20em;
             height: 0;
             transform: translate(0%,-100%);
+            p,h2 {
+                font-size: 1.1em;
+            }
             &.visible {
                 transform: translate(0%,0%);
                 height: 18em;
             }
         }
     }
-    @include tablette-version {
-        * {
-            font-size: 2vw;
-        }
-    }
     @include mobile-version {
-        * {
-            font-size: 3vw;
-        }
         .position {
             top: 3em;
+        }
+    }
+    .check-section {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 20;
+        background-color: #fff;
+        padding: 4em;
+        p {
+            font-size: 2em;
         }
     }
 }

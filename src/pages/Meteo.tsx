@@ -13,7 +13,6 @@ const APIKEY = import.meta.env.VITE_METEOKEY;
 export default function Meteo() {
   const [apiKey, setApiKey] = useState('');
   const [jsonResult, setJsonResult] = useState<meteoResultData|null>(null);
-  const [positionActual, setPositionActual] = useState(true);
   const [jsonCoordinates, setJsonCoordinates] = useState<{latitude:number,longitude:number}|null>(null);
   //const [night, setNight] = useState(false);
   const [callData, setCallData] = useState(false);
@@ -21,8 +20,14 @@ export default function Meteo() {
   const [extraInfos, setExtraInfos] = useState({...new NewExtraMeteoInfos('','',0,0,0,'')});
   const [meteoDaysDisplayed, setMeteoDaysDisplayed] = useState(false);
   const [moreInfos, setMoreInfos] = useState(false);
+
   const [showPrevisions, setShowPrevisions] = useState(false);
+  const [positionActual, setPositionActual] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
+  
+  const [loading, setLoading] = useState(true);
+
+  //const [checkSection, setCheckSection] = useState(true);
   //fetch function
   const inputSearchQuery = async () => {
     const url = apiKey ? `https://api.openweathermap.org/data/3.0/onecall?lat=${jsonCoordinates?.latitude}&lon=${jsonCoordinates?.longitude}&exclude=minutely&appid=${apiKey}&lang=fr` : '';
@@ -33,8 +38,10 @@ export default function Meteo() {
       }
       const result = await response.json();
       setCallData(false);
+      setLoading(false);
       return result;
     } catch (error) {
+      setLoading(false);
       console.log(error);
       /* const message = error instanceof Error ? error.message : '';
       return {message}; */
@@ -148,17 +155,20 @@ export default function Meteo() {
 
   //fetch meteo data if no previous data, older than 2h or new coordinates
   const checksOldData = () => {
+    const nullishCoordinates = (jsonCoordinates?.latitude || jsonCoordinates?.longitude) ?? 'none';
+    
     if (sessionStorage.meteoData) {
       const actualDateTime = new Date().getTime();
       const storedData = JSON.parse(sessionStorage.getItem('meteoData') || '');
       const storedDt = storedData.current.dt*1000;
       const difference = actualDateTime - storedDt;
       let recall = false;
-      difference < 7200000 ? setJsonResult(storedData) : (recall = true);
-      if (jsonCoordinates && (jsonCoordinates.latitude !== storedData.lat || jsonCoordinates.longitude !== storedData.lon)) recall = true;
-      if (recall && apiKey) setCallData(true);
-    } else {
-      apiKey && setCallData(true);
+      difference < 3600000 ? setJsonResult(storedData) : (recall = true);
+      if (jsonCoordinates && (nullishCoordinates !== 'none') && (jsonCoordinates.latitude !== storedData.lat || jsonCoordinates.longitude !== storedData.lon)) recall = true;
+      if (recall && apiKey && nullishCoordinates !== 'none') setCallData(true);
+      !recall && setLoading(false);
+    } else {      
+      (apiKey && (nullishCoordinates !== 'none')) && setCallData(true);
     }
   }
 
@@ -189,6 +199,17 @@ export default function Meteo() {
 
   useEffect(() => {
     APIKEY && setApiKey(APIKEY);
+    setTimeout(() => {
+      setJsonCoordinates(state => {
+        const coordinates = (state?.latitude || state?.longitude) ?? 'none';
+        if (coordinates === 'none') {
+          setLoading(false);
+          alert('Coordonées non trouvées, entrez coordonnées manuelles');
+          setPositionActual(false);
+        }
+        return state;
+      })
+    }, 5000);
   }, [])
 
   useEffect(() => {
@@ -251,14 +272,18 @@ export default function Meteo() {
 
   return (
     <main className="meteo-page">
+      {/* {checkSection ? <div className="check-section">
+        <p>API key : {apiKey ? 'OK' : 'none'}</p>
+        <p>coordinates : {(jsonCoordinates?.latitude || jsonCoordinates?.longitude) ?? 'none'}</p>
+      </div> : <></>} */}
       <div className="back-home">
         <Link to='/'></Link>
       </div>
-      <form className="api-form" onSubmit={keySubmit}>
+      {apiKey ? <></> : <form className="api-form" onSubmit={keySubmit}>
         <label htmlFor="manual_api"><Link to='https://home.openweathermap.org/subscriptions/billing_info/onecall_30/base?key=base&service=onecall_30' target="_blank" rel='noopener'>API key</Link></label>
         <input type="password" name="manual_api" />
         <button className="submit"></button>
-      </form>
+      </form>}
       {showAlert ? <div className="alert-window">
         <button className="close-alert" onClick={() => setShowAlert(false)}></button>
         {jsonResult?.alerts?.map(alertObject => <AlertMeteo key={alertObject.id} alertObject={alertObject} />)}
@@ -267,7 +292,7 @@ export default function Meteo() {
         positionActual={positionActual} 
         setPositionActual={setPositionActual} 
         submitNewCoord={submitNewCoord} />
-      {isLoading ? <Loader /> : <>
+      {isLoading || loading ? <Loader /> : <>
         <section className="meteo-section">
           <div className="meteo-container">
             {jsonResult?.alerts?.length ? <button className="alert-btn" onClick={() => setShowAlert(true)}></button> : <></>}

@@ -84,4 +84,9 @@
             height: auto;
         }
     }
+    @include tablette-version {
+        * {
+            font-size: 3vw;
+        }
+    }
 }
