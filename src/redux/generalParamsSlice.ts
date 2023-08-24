@@ -2,13 +2,11 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface ParamsState {
     loading: boolean;
-    alertWindow: boolean;
     alertMessage: string;
 }
 
 const initialState: ParamsState = {
     loading: false,
-    alertWindow: false,
     alertMessage: ''
 }
 

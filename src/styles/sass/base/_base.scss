@@ -30,6 +30,37 @@ body {
       color: #fff;
     }
   }
+  .alert-window {
+    position: fixed;
+    z-index: 50;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.7);
+    @include flexCenter;
+    .inside-error {
+      width: 80%;
+      height: 80%;
+      background-color: rgb(209, 0, 0);
+      border: solid white;
+      border-radius: 1em;
+      @include flexColumn;
+      justify-content: center;
+      padding: 0 2em;
+    }
+    p {
+      font-size: 2em;
+      color: white;
+    }
+    button {
+      margin-top: 2em;
+      @include btnShadow;
+      &:active {
+        box-shadow: none;
+      }
+    }
+  }
 }
 
 ul, li {

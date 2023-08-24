@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Loader from "./components/Loader";
-import { useAppSelector } from "./redux/hooks";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { useEffect } from "react";
 import { changeBodySize } from "./utils/utilsFuncs";
 import Slider from "./pages/Slider";
@@ -14,9 +14,12 @@ import PlayerAudio from "./pages/PlayerAudio";
 import InfiniteScroll from "./pages/InfiniteScroll";
 import Commercial from "./pages/Commercial";
 import NoteBook from "./pages/NoteBook";
+import { updateGeneralParams } from "./redux/generalParamsSlice";
 
 function App() {
-  const isLoading = useAppSelector(state => state.generalParamsSlice.loading);
+  const generalParams = useAppSelector(state => state.generalParamsSlice);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     window.addEventListener('resize', changeBodySize);
@@ -27,9 +30,19 @@ function App() {
     }
   }, []);
 
+  const closeWindow = () => {
+    dispatch(updateGeneralParams({alertMessage:''}));
+  }
+
   return (
     <div className="App">
-      {isLoading ? <Loader /> :
+      {generalParams.alertMessage ? <div className="alert-window">
+        <div className="inside-error">
+          <p>{generalParams.alertMessage}</p>
+          <button onClick={closeWindow}>OK</button>
+        </div>
+      </div> : <></>}
+      {generalParams?.loading ? <Loader /> :
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/slider" element={<Slider />} />

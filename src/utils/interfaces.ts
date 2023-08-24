@@ -63,3 +63,47 @@ export interface meteoResultData {
     hourly:hourlyObj[],
     alerts?:meteoAlertsObject[],
 }
+
+interface countriesType {
+    area:number,
+    capital:string[],
+    coatOfArms?:{
+        png:string,
+        svg:string
+    },
+    flags:{
+        alt:string,
+        png?:string,
+        svg:string
+    },
+    population:string
+}
+export interface geoDataResult extends countriesType {
+    [key:string]:unknown,
+    currencies:{
+        [key:string]:{name:string, symbol:string}
+    },
+    languages:{
+        [key:string]:string
+    },
+    name:{
+        common:string,
+        nativeName:{
+            [key:string]:{official:string,common:string},
+        },
+        official:string
+    }
+}
+export interface countryObject extends countriesType {
+    id:string,
+    currencies:{name:string, symbol:string,short:string},
+    languages:string[],
+    name:{
+        common:string,
+        nativeName:{
+            official:string,
+            common:string
+        },
+        official:string
+    }
+}

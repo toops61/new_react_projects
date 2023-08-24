@@ -23,11 +23,11 @@ export default function Meteo() {
 
   const [showPrevisions, setShowPrevisions] = useState(false);
   const [positionActual, setPositionActual] = useState(true);
-  const [showAlert, setShowAlert] = useState(false);
+  const [showMeteoAlert, setShowMeteoAlert] = useState(false);
   
   const [loading, setLoading] = useState(true);
 
-  //const [checkSection, setCheckSection] = useState(true);
+  
   //fetch function
   const inputSearchQuery = async () => {
     const url = apiKey ? `https://api.openweathermap.org/data/3.0/onecall?lat=${jsonCoordinates?.latitude}&lon=${jsonCoordinates?.longitude}&exclude=minutely&appid=${apiKey}&lang=fr` : '';
@@ -270,12 +270,15 @@ export default function Meteo() {
     )
   }
 
+  const EmptyCoordinatesContent = () => {
+    const noResultCoord = (jsonCoordinates?.latitude || jsonCoordinates?.longitude) ?? "no-result";
+    return (
+      noResultCoord === "no-result" ? <p>pas de coordonnées GPS</p> : <></>
+    )
+  }
+
   return (
     <main className="meteo-page">
-      {/* {checkSection ? <div className="check-section">
-        <p>API key : {apiKey ? 'OK' : 'none'}</p>
-        <p>coordinates : {(jsonCoordinates?.latitude || jsonCoordinates?.longitude) ?? 'none'}</p>
-      </div> : <></>} */}
       <div className="back-home">
         <Link to='/'></Link>
       </div>
@@ -284,8 +287,8 @@ export default function Meteo() {
         <input type="password" name="manual_api" />
         <button className="submit"></button>
       </form>}
-      {showAlert ? <div className="alert-window">
-        <button className="close-alert" onClick={() => setShowAlert(false)}></button>
+      {showMeteoAlert ? <div className="alert-meteo">
+        <button className="close-alert" onClick={() => setShowMeteoAlert(false)}></button>
         {jsonResult?.alerts?.map(alertObject => <AlertMeteo key={alertObject.id} alertObject={alertObject} />)}
       </div> : <></>}
       <Position 
@@ -294,8 +297,8 @@ export default function Meteo() {
         submitNewCoord={submitNewCoord} />
       {isLoading || loading ? <Loader /> : <>
         <section className="meteo-section">
-          <div className="meteo-container">
-            {jsonResult?.alerts?.length ? <button className="alert-btn" onClick={() => setShowAlert(true)}></button> : <></>}
+          {jsonResult ? <div className="meteo-container">
+            {jsonResult?.alerts?.length ? <button className="alert-btn" onClick={() => setShowMeteoAlert(true)}></button> : <></>}
             <button className={"plus-btn" + (moreInfos ? " less" : "")} onClick={() => setMoreInfos(!moreInfos)}></button>
             <div className="picto-container">
               <img src={infoToDisplay.imageURL} alt="meteo icon" />
@@ -309,7 +312,11 @@ export default function Meteo() {
               <p>{meteoDaysDisplayed ? 'days' : 'hours'}</p>
             </button> : <></>}
             <div className={"previsions-btn" + (showPrevisions ? " less" : "")} onClick={() => setShowPrevisions(!showPrevisions)}><p>prévisions</p></div>
-          </div>
+          </div> : <div className="no-result">
+              <h1>Pas d'informations à afficher</h1>
+             {apiKey ? <></> : <p>pas de clé d'API</p>}
+             <EmptyCoordinatesContent />
+            </div>}
           {extraInfos ? <div className={"more-infos" + (moreInfos ? " visible" : "")}>
             <h2>Soleil</h2>
             <p><span>Lever : </span>{extraInfos.sun_up}</p>

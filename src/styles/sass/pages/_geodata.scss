@@ -1,0 +1,46 @@
+.geodata-page {
+    background-color: #000c5c;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 3em;
+    .back-home a::before {
+        color: white;
+    }
+    h1 {
+        font-size: 1.5em;
+        color: white;
+        margin: 1em 0 .5em 0;
+    }
+    p {
+        color: white;
+    }
+    .flags-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .flag {
+        position: relative;
+        margin: 1em;
+        width: 13em;
+        height: 9em;
+        img {
+            @include imageFit(cover);
+        }
+    }
+    .country-btn {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #fff;
+        padding: .2em .5em;
+        border-radius: 0 0 .3em 0;
+        @include flexCenter;
+       box-shadow: 2px 2px 2px;
+    }
+    @include portrait-version {
+        padding: 3em 1.5em;
+    }
+}

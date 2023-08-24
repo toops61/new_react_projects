@@ -51,7 +51,7 @@
             animation: flashing-text .6s alternate infinite;
         }
     }
-    .alert-window {
+    .alert-meteo {
         position: absolute;
         width: 80%;
         height: 80%;
@@ -123,6 +123,25 @@
         display: flex;
         margin-top: 15vh;
     }
+    .no-result {
+        width: 20em;
+        height: 22em;
+        background-color: #158de3;
+        border-radius: 2em;
+        border: solid;
+        @include flexColumn;
+        justify-content: center;
+       
+        h1,p {
+            color: white;
+            font-size: 1.5em;
+            @include textShadow;
+            text-align: center;
+        }
+        p {
+            margin-top: 1em;
+        }
+    }
     .meteo-container {
         position: relative;
         z-index: 5;
@@ -165,7 +184,7 @@
         width: 0;
         height: 22em;
         opacity: 0;
-        background-color: #00d0ff;
+        background-color: white;
         border-radius: 2em;
         border: solid rgb(0, 0, 199);
         transition: .5s;
