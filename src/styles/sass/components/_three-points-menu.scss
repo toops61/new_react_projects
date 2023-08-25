@@ -1,0 +1,13 @@
+.three-points-menu {
+    height: 1.6em;
+    width: 1em;
+    @include flexColumn;
+    justify-content: space-between;
+    margin: 0 1em;
+    .points {
+        width: 0.35em;
+        height: 0.35em;
+        background-color: #fff;
+        border-radius: 50%;
+    }
+}
