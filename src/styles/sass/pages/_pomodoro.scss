@@ -1,0 +1,81 @@
+.pomodoro-page {
+    width: 100%;
+    height: 100%;
+    @include flexCenter;
+    button {
+        background-color: #efefef;
+        border: solid .12em;
+        box-shadow: 2px 2px 2px;
+        border-radius: .2em;
+        padding: 0;
+        &:active {
+            box-shadow: .5px .5px 2px;
+        }
+    }
+    h1 {
+        font-size: 1.4em;
+    }
+    .main-container {
+        width: 30em;
+        height: 20em;
+        border: solid .12em;
+        @include flexColumn;
+        padding-top: 1em;
+    }
+    .timers-container {
+        @include flexCenter;
+    }
+    .timers-select {
+        @include flexColumn;
+        margin: 1em .8em;
+    }
+    .select-minutes {
+        @include flexCenter;
+        p {
+            margin: 0 .5em;
+        }
+        button {
+            width: 1.6em;
+            height: 1.6em;
+            @include flexCenter;
+            
+        }
+        .less::before {
+            @include icon('\f068',.8em);
+        }
+        .more::before {
+            @include icon('\2b',.8em);
+        }
+    }
+    .main-timer-container {
+        @include flexColumn;
+        h3 {
+            font-size: 1.1em;
+        }
+        p {
+            font-size: .7em;
+        }
+    }
+    .main-timer {
+        padding: 1em;
+        margin: .5em 0;
+        box-shadow: 1px 1px 3px;
+        background-color: #efefef;
+        @include flexCenter;
+        p {
+            font-size: 2em;
+        }
+    }
+    .reset-btn {
+        margin-top: 2em;
+        font-size: .9em;
+        width: 6em;
+        height: 2.4em;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        &::after {
+            @include icon('\f0e2',.9em)
+        }
+    }
+}
