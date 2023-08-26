@@ -5,6 +5,7 @@ import ThreePointsMenu from "../components/ThreePointsMenu";
 export default function CodeEditor() {
   const [showPreview, setShowPreview] = useState(false);
   const [codeEdit, setCodeEdit] = useState('html');
+  const [showMenu, setShowMenu] = useState(false);
 
   const [areaObject, setAreaObject] = useState<{[key:string]:string}>({
     html_area:'',
@@ -58,15 +59,15 @@ export default function CodeEditor() {
           </button>
         </div>
         <div className="end-header">
-          <ThreePointsMenu />
+          <ThreePointsMenu showMenu={showMenu} setShowMenu={setShowMenu} />
         </div>
       </header>
       <section className="down-part">
-        <div className="menu-editor">
+        {showMenu ? <div className="menu-editor">
           <button className="html-btn" onClick={changeEdit}><p>HTML</p></button>
           <button className="css-btn" onClick={changeEdit}><p>CSS</p></button>
           <button className="js-btn" onClick={changeEdit}><p>JavaScript</p></button>
-        </div>
+        </div> : <></>}
         {showPreview ? <div className="editor-preview">
           <iframe srcDoc={srcDoc} sandbox="allow-scripts"></iframe>
         </div> : 
