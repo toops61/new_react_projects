@@ -14,9 +14,10 @@ export default function CodeEditor() {
 
   const changeEdit = (e:React.MouseEvent) => {
     const target = e.target as HTMLButtonElement;
-    let elementChanged = target.parentElement?.className;
+    let elementChanged = target.className ? target.className : target.parentElement?.className;
     elementChanged = elementChanged ? elementChanged.split('-btn')[0] : 'html';
     setCodeEdit(elementChanged);
+    setShowPreview(false);
   }
 
   const changeArea = (e:ChangeEvent) => {
@@ -25,6 +26,22 @@ export default function CodeEditor() {
     tempObject[target.name]=target.value;
     setAreaObject(tempObject);
   }
+
+  //inside iframe
+  const srcDoc = `
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>${areaObject.css_area}</style>
+      </head>
+      <body>
+        ${areaObject.html_area}
+        <script>${areaObject.js_area}</script>
+      </body>
+    </html>
+  `
 
   return (
     <main className="code-editor-page">
@@ -35,21 +52,23 @@ export default function CodeEditor() {
           </div>
           <h1>The code editor</h1>
         </div>
-        <button className={"show-preview" + (showPreview ? ' hide' : '')} onClick={() => setShowPreview(!showPreview)}>
-          {showPreview ? 'Hide' : 'Show'} Preview
-        </button>
-        <ThreePointsMenu />
+        <div className="btn-container">
+          <button className={"show-preview" + (showPreview ? ' hide' : '')} onClick={() => setShowPreview(!showPreview)}>
+            {showPreview ? 'Hide' : 'Show'} Preview
+          </button>
+        </div>
+        <div className="end-header">
+          <ThreePointsMenu />
+        </div>
       </header>
       <section className="down-part">
-        <div className="navbar-editor">
+        <div className="menu-editor">
           <button className="html-btn" onClick={changeEdit}><p>HTML</p></button>
           <button className="css-btn" onClick={changeEdit}><p>CSS</p></button>
           <button className="js-btn" onClick={changeEdit}><p>JavaScript</p></button>
         </div>
         {showPreview ? <div className="editor-preview">
-          <div 
-            dangerouslySetInnerHTML={{__html: areaObject.html_area}}
-          />
+          <iframe srcDoc={srcDoc} sandbox="allow-scripts"></iframe>
         </div> : 
         <div className="code-edit">
           {codeEdit === 'html' ? <textarea name='html_area' onChange={changeArea} value={areaObject.html_area}></textarea> : <></>}
