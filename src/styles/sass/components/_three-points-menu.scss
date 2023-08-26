@@ -1,4 +1,5 @@
 .three-points-menu {
+    position: relative;
     cursor: pointer;
     height: 1.6em;
     width: 1em;
@@ -8,7 +9,10 @@
     .points {
         width: 0.35em;
         height: 0.35em;
-        background-color: #fff;
+        background-color: #ffffff;
         border-radius: 50%;
+    }
+    &:hover > .popup-window {
+        opacity: 1;
     }
 }

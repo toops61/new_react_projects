@@ -107,13 +107,3 @@
     background-color: rgb(112, 112, 112);
     margin: 0 .5em;
 }
-
-@mixin popup {
-    position: absolute;
-    top:-2em;
-    padding: .6em;
-    background-color: rgb(97, 97, 97);
-    * {
-        color: #f1f1f1;
-    }
-}

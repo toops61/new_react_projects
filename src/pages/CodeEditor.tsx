@@ -5,7 +5,7 @@ import ThreePointsMenu from "../components/ThreePointsMenu";
 export default function CodeEditor() {
   const [showPreview, setShowPreview] = useState(false);
   const [codeEdit, setCodeEdit] = useState('html');
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(true);
 
   const [areaObject, setAreaObject] = useState<{[key:string]:string}>({
     html_area:'',
