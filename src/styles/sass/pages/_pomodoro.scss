@@ -59,7 +59,7 @@
     .main-timer {
         padding: 1em;
         margin: .5em 0;
-        box-shadow: 1px 1px 3px;
+        box-shadow: 2px 2px 2px;
         background-color: #efefef;
         @include flexCenter;
         p {
@@ -67,7 +67,7 @@
         }
     }
     .reset-btn {
-        margin-top: 2em;
+        margin-top: 1.5em;
         font-size: .9em;
         width: 6em;
         height: 2.4em;
@@ -76,6 +76,18 @@
         justify-content: space-around;
         &::after {
             @include icon('\f0e2',.9em)
+        }
+    }
+    .play-btn {
+        margin-top: 1.5em;
+        font-size: .9em;
+        width: 8em;
+        height: 2.6em;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        &::after {
+            @include icon('\f04b',.9em)
         }
     }
 }
